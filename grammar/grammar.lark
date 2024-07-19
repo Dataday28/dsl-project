@@ -1,0 +1,57 @@
+start: expr*
+
+expr: statement+ 
+
+statement: (var_assigment | var_declaration | outln | mkdir| rmdir | touch | move 
+            | copy | list | cat | genkey | cryptext | crypfile | destext | desfile) ";"
+
+var_declaration: "var" var_name ("=" value)?
+
+var_assigment:  var_name "=" value
+
+outln: "outln" "(" (value | name )? ")"
+
+mkdir: "CreateDirectory" "(" file ")"
+
+rmdir: "DeleteDirectory" "(" file ")"
+
+touch: "CreateFile" "(" file ")"
+
+move: "MoveFile" "(" file "," src_path ")"
+
+copy: "CopyFile" "(" file "," src_path ")"
+
+list: "List" "(" src_path? ")"
+
+cat: "ReadFile" "(" file ")"
+
+genkey: "GenerateKey" "(" dst_key ")"
+
+cryptext: "CrypText" "(" dst_key "," file ")"
+
+crypfile: "CrypFile" "(" dst_key "," file ")"
+
+destext: "DesText" "(" dst_key "," cryp ")"
+
+desfile: "DesFile" "(" dst_key "," file ")"
+
+name: var_name
+
+cryp: "b" "'" SRC "'"
+
+file: "'" SRC "'"
+dst_key: "'" SRC ("/" SRC)* "'"
+src_path: "'" SRC ("/" SRC)* "'"
+
+value: NUMERIC | STRING  | BOOLEAN
+var_name: ALPHABET
+
+SRC: /[a-zA-Z0-9_.=-]+/
+ALPHABET: /[a-zA-Z_-]+/
+NUMERIC: /[0-9]+/
+BOOLEAN: "true" | "false"
+STRING: ESCAPED_STRING
+
+%import common.ESCAPED_STRING
+%import common.WS
+%ignore WS      
