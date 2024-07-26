@@ -20,7 +20,7 @@ class DSL(Transformer):
     def statement(self, state):
         return state
     
-    def var_declaration(self, name, value):
+    def var_declaration(self, name, value = None):
         # Implementar la lógica para declarar una variable
         Variables().var_declaration(self.variables, name, value)
 
@@ -30,63 +30,86 @@ class DSL(Transformer):
 
     def outln(self, name=None):
         print(name)
+        return name
+
+    def sum(self, a, b):
+        # Implementar la lógica para sumar dos números
+        return a + b
+
+    def rest(self, a, b):
+        # Implementar la lógica para restar dos números
+        return a - b
+
+    def mul(self, a, b):
+        # Implementar la lógica para multiplicar dos números
+        return a * b
+
+    def div(self, a, b):
+        # Implementar la lógica para dividir dos números
+        if b!= 0:
+            return a / b
+        else:
+            raise ZeroDivisionError("\n Error: División por cero \n")
     
-    def mkdir(self, path):
+    def mkdir(self, files):
         # Implementar la lógica para crear un directorio
-        HandleFiles().mkdir(path)
+        HandleFiles().mkdir(files)
 
-    def rmdir(self, path):
+    def rmdir(self, files):
         # Implementar la lógica para eliminar un directorio
-        HandleFiles().rmdir(path)
+        HandleFiles().rmdir(files)
 
-    def touch(self, path):
+    def touch(self, files):
         # Implementar la lógica para crear un archivo vacío
-        HandleFiles().touch(path)
+        HandleFiles().touch(files)
 
-    def move(self, src_path, dst_path):
+    def move(self, files, src_path):
         # Implementar la lógica para mover un archivo
-        HandleFiles().move(src_path, dst_path)
+        HandleFiles().move(files, src_path)
 
-    def copy(self, src_path, dst_path):
+    def copy(self, files, src_path):
         # Implementar la lógica para copiar un archivo
-        HandleFiles().copy(src_path, dst_path)
+        HandleFiles().copy(files, src_path)
 
-    def list(self, dst_path='.'):
+    def list(self, src_path='.'):
         # Implementar la lógica para listar archivos y directorios
-        HandleFiles().list(dst_path)
+        HandleFiles().list(src_path)
 
-    def cat(self, path):
+    def cat(self, files):
         # Implementar la lógica para mostrar el contenido de un archivo
-        HandleFiles().cat(path)
+        HandleFiles().cat(files)
 
-    def genkey(self, dst_path):
+    def genkey(self, dst_key):
         # Implementar la lógica para generar una clave de encriptación
-        Crypt().genkey(dst_path)
+        Crypt().genkey(dst_key)
 
-    def cryptext(self, dst_path, *path):
+    def cryptext(self, dst_key, *files):
         # Implementar la lógica para cifrar un texto
-        Crypt().cryptext(dst_path, " ".join(path))
+        Crypt().cryptext(dst_key, " ".join(files))
 
-    def crypfile(self, dst_path, path):
+    def crypfile(self, dst_key, files):
         # Implementar la lógica para cifrar un archivo
-        Crypt().crypfile(dst_path, path)
+        Crypt().crypfile(dst_key, files)
 
-    def destext(self, dst_path, cryp):
+    def destext(self, dst_key, cryp):
         # Implementar la lógica para descifrar un texto
-        Crypt().destext(dst_path, cryp)
+        Crypt().destext(dst_key, cryp)
 
-    def desfile(self, dst_path, path):
+    def desfile(self, dst_key, files):
         # Implementar la lógica para descifrar un archivo
-        Crypt().desfile(dst_path, path)
+        Crypt().desfile(dst_key, files)
 
-    def path(self, pat):
-        return pat
+    def text(self, *fil):
+        return " ".join(fil)
     
-    def src_path(self, src):
-        return src
+    def files(self, fil):
+        return fil
     
-    def dst_path(self, *dst):
+    def dst_key(self, *dst):
         return "/".join(dst)
+    
+    def src_path(self, *src):
+        return "/".join(src)
     
     def cryp(self, cry):
         return cry
@@ -95,7 +118,9 @@ class DSL(Transformer):
         return name
     
     def name(self, var):
-        return self.variables[var]
+        if str(var) not in self.variables:
+            raise NameError(f"\n Error: Variable '{var}' no definida \n")
+        return self.variables[str(var)]
     
     def value(self, val):
         return val
@@ -105,6 +130,12 @@ class DSL(Transformer):
     
     def NUMERIC(self, value):
         return int(value)
+    
+    def FLOT(self, value):
+        return float(value)
+    
+    def number(self, n):
+        return float(n)
     
     def BOOLEAN(self, value):
         if value == 'true':

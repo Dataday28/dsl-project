@@ -8,16 +8,16 @@ class HandleFiles:
         # Implementar la lógica para crear un directorio
         try:
             os.makedirs(path, exist_ok=True)
-            print(f" \n Creando directorio: {path} \n")
+            print(f" \n Se creo el directorio en: {path} \n")
         except Exception as ex:
-            print(f"\n Error al crear directorio: '{path}': {ex} \n")
+            print(f"\n Error al crear el directorio: '{path}': {ex} \n")
         
 
     def rmdir(self, path):
         # Implementar la lógica para eliminar un directorio
         try:
             shutil.rmtree(path)
-            print(f" \n Eliminando directorio: {path} \n")
+            print(f" \n Directorio Eliminado: {path} \n")
         except Exception as ex:
             print(f"\n Error al eliminar directorio: '{path}': {ex} \n")
 
@@ -26,7 +26,7 @@ class HandleFiles:
         try:
             with open(path, 'w') as archivo:
                 pass
-            print(f"\n Creando archivo: {path} \n")
+            print(f"\n Srchivo creado: {path} \n")
         except Exception as ex:
             print(f"\n Error al crear archivo: '{path}': {ex} \n")
 
@@ -62,7 +62,7 @@ class HandleFiles:
         try:
             with open(path, 'r') as archivo:
                 contenido = archivo.read()
-            print(f"\n Contenido de '{path}':\n{contenido} \n ")
+            print(f"\n Contenido de '{path}': \n \n {contenido} \n ")
 
         except Exception as ex:
             print(f"\n Error al mostrar contenido de '{path}': {ex} \n")

@@ -3,55 +3,80 @@ start: expr*
 expr: statement+ 
 
 statement: (var_assigment | var_declaration | outln | mkdir| rmdir | touch | move 
-            | copy | list | cat | genkey | cryptext | crypfile | destext | desfile) ";"
+            | copy | list | cat | genkey | cryptext | crypfile | destext | desfile | expt) ";"
 
+// Variables
 var_declaration: "var" var_name ("=" value)?
 
 var_assigment:  var_name "=" value
 
-outln: "outln" "(" (value | name )? ")"
+// Impresion en consola
+outln: "outln" "(" (value | expt )? ")"
 
-mkdir: "CreateDirectory" "(" file ")"
+// Manejador de archivos o directorios
+mkdir: "CreateDirectory" "(" (files | name) ")"
 
-rmdir: "DeleteDirectory" "(" file ")"
+rmdir: "DeleteDirectory" "(" (files | name) ")"
 
-touch: "CreateFile" "(" file ")"
+touch: "CreateFile" "(" (files | name) ")"
 
-move: "MoveFile" "(" file "," src_path ")"
+move: "MoveFile" "(" (files | name) "," (src_path | name) ")"
 
-copy: "CopyFile" "(" file "," src_path ")"
+copy: "CopyFile" "(" (files | name) "," (src_path | name) ")"
 
-list: "List" "(" src_path? ")"
+list: "List" "(" (src_path | name)? ")"
 
-cat: "ReadFile" "(" file ")"
+cat: "ReadFile" "(" (files | name) ")"
 
-genkey: "GenerateKey" "(" dst_key ")"
+// Crifrador de archivos o texto
+genkey: "GenerateKey" "(" (dst_key | name) ")"
 
-cryptext: "CrypText" "(" dst_key "," file ")"
+cryptext: "CrypText" "(" (dst_key | name) "," (text | name) ")"
 
-crypfile: "CrypFile" "(" dst_key "," file ")"
+crypfile: "CrypFile" "(" (dst_key | name) "," (files | name) ")"
 
-destext: "DesText" "(" dst_key "," cryp ")"
+destext: "DesText" "(" (dst_key | name) "," (cryp | name) ")"
 
-desfile: "DesFile" "(" dst_key "," file ")"
+desfile: "DesFile" "(" (dst_key | name) "," (files | name) ")"
 
+// Operaciones matematicas
+?expt: term
+    | expt "+" term -> sum
+    | expt "-" term -> rest
+
+?term: factor
+    | term "*" factor -> mul
+    | term "/" factor -> div
+
+// Asignacion de valores
 name: var_name
 
 cryp: "b" "'" SRC "'"
 
-file: "'" SRC "'"
+text: "'" (SRC)* "'"
+files: "'" SRC "'"
 dst_key: "'" SRC ("/" SRC)* "'"
 src_path: "'" SRC ("/" SRC)* "'"
 
-value: NUMERIC | STRING  | BOOLEAN
-var_name: ALPHABET
+value: NUMERIC | STRING  | BOOLEAN | FLOT | src_path | text | cryp
+var_name: CNAME
+?factor: NUMBER -> number
+        | var_name
+        | "(" expt ")"
 
-SRC: /[a-zA-Z0-9_.=-]+/
+SRC: /[a-zA-Z0-9_.:=-]+/
 ALPHABET: /[a-zA-Z_-]+/
 NUMERIC: /[0-9]+/
+FLOT: FLOAT
 BOOLEAN: "true" | "false"
 STRING: ESCAPED_STRING
+COMMENT: /#[^\n]*/
 
+// Importaciones
+%import common.CNAME
+%import common.FLOAT
 %import common.ESCAPED_STRING
+%import common.NUMBER
 %import common.WS
-%ignore WS      
+%ignore WS  
+%ignore COMMENT     

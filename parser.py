@@ -1,4 +1,4 @@
-from lark import Lark
+from lark import Lark, UnexpectedInput
 from transformer import DSL
 
 
@@ -14,14 +14,15 @@ with open('example.dsl', 'r') as file:
     dsl_code = file.read()
 
 ## Analizar el código DSL
-def evaluate(expression):
+def evaluate(dsl_code):
     try:
-        ast = parser.parse(expression)
-        return ast
-    
-    except Exception as e:
-        print(f"Error durante la análisis: {e}")
-        return exit(1)
+        return parser.parse(dsl_code)
+    except UnexpectedInput as e:
+        print(f"\n Error en la sintaxis de la entrada: {e} \n")
+    except NameError as e:
+        print(e)
+    except ZeroDivisionError as e:
+        print(e)
 
 # Ejecutar el código DSL y obtener el árbol AST
 evaluate(dsl_code)

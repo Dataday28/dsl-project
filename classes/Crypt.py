@@ -5,37 +5,58 @@ class Crypt:
     
     def genkey(self, path):
         # Implementar la lógica para generar una clave de encriptación
-        key = Fernet.generate_key()
-        with open(f"{path}/clave.key", 'wb') as key_file:
-            key_file.write(key)
-            print(f"Generando clave de encriptación en: {path}")
+        try:
+            key = Fernet.generate_key()
+            with open(f"{path}/clave.key", 'wb') as key_file:
+                key_file.write(key)
+                print(f"\n Clave generada en: {path} \n")
 
+        except Exception as ex:
+            print(f"\n Error al generar la clave: {ex} \n No tiene permiso para crear el archivo\n")
+    
     def cryptext(self, dst_path, path):
         # Implementar la lógica para cifrar un texto
 
-        with open(dst_path, 'rb') as key_file:
-            key = key_file.read()
+        try:
+            with open(dst_path, 'rb') as key_file:
+                key = key_file.read()
+        
+        except Exception as ex:
+            print(f"\n Error al abrir la clave: {ex} \n No tiene permiso para aceder al archivo  o no lo especifico en la ruta \n")
 
         cipher_suite = Fernet(key)
-        text = path.encode()
-        ciphertext = cipher_suite.encrypt(text)
 
-        print(f" \n Texto cifrado: {ciphertext} \n")
+        try:
+            text = path.encode()
+            ciphertext = cipher_suite.encrypt(text)
+
+            print(f" \n Texto cifrado: {ciphertext} \n")
+
+        except Exception as ex:
+            print(f"\n Error al crifrar el texto: {ex} \n")
 
     def crypfile(self, dst_path, path):
         # Implementar la lógica para cifrar un archivo
 
-        with open(dst_path, 'rb') as key_file:
-            key = key_file.read()
+        try:
+            with open(dst_path, 'rb') as key_file:
+                key = key_file.read()
+        
+        except Exception as ex:
+            print(f"\n Error al abrir la clave: {ex} \n No tiene permiso para aceder al archivo  o no lo especifico en la ruta \n")
 
         cipher = Fernet(key)
         
-        with open(path, 'rb') as file:
-            file_dat = file.read()
+        try:
+            with open(path, 'rb') as file:
+                file_dat = file.read()
+
+        except Exception as ex:
+            print(f"\n Error al abrir el archivo: {ex} \n No tiene permiso para aceder al archivo o no lo especifico en la ruta \n")
 
         ciphertext = cipher.encrypt(file_dat)
 
-        with open(path + '.enc', 'wb') as file:
+        with open(path, 'wb') as file:
             file.write(ciphertext)
         
         print(f"\n Archivo Cifrado: {path} \n")
@@ -43,8 +64,12 @@ class Crypt:
     def destext(self, dst_path, cryp):
         # Implementar la lógica para descifrar un texto
 
-        with open(dst_path, 'rb') as key_file:
-            key = key_file.read()
+        try:
+            with open(dst_path, 'rb') as key_file:
+                key = key_file.read()
+        
+        except Exception as ex:
+            print(f"\n Error al abrir la clave: {ex} \n No tiene permiso para aceder al archivo  o no lo especifico en la ruta \n")
 
         cipher = Fernet(key)
         text = cipher.decrypt(cryp)
@@ -53,14 +78,21 @@ class Crypt:
 
     def desfile(self, dst_path, path):
         # Implementar la lógica para descifrar un archivo
-
-        with open(dst_path, 'rb') as key_file:
-            key = key_file.read()
+        try:
+            with open(dst_path, 'rb') as key_file:
+                key = key_file.read()
+        
+        except Exception as ex:
+            print(f"\n Error al abrir la clave: {ex} \n No tiene permiso para aceder al archivo  o no lo especifico en la ruta \n")
 
         cipher = Fernet(key)
 
-        with open(path, 'rb') as file:
-            file_dat = file.read()
+        try: 
+            with open(path, 'rb') as file:
+                file_dat = file.read()
+
+        except Exception as ex:
+            print(f"\n Error al abrir el archivo: {ex} \n No tiene permiso para aceder al archivo o no lo especifico en la ruta \n")
 
         decrypted_text = cipher.decrypt(file_dat)
 
