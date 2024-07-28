@@ -52,6 +52,8 @@ x = 5;
 
 ## Operaciones de Entrada/Salida
 
+Imprimir en consola: Imprime en la consola un valor que le asignes.
+
 ```python
 outln(valor);
 ```
@@ -61,7 +63,14 @@ Ejemplo:
 ```python
 outln("Hola, mundo");
 outln(x);
+```
 
+Comentarios: Puedes agregar comentarios o codigo que quieras que el DSL ignore.
+
+Ejemplo: 
+
+```python
+# Este es un comentario
 ```
 
 ## Operaciones de Sistema de Archivos

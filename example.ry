@@ -6,8 +6,12 @@
 # En caso de las rutas puedes poner la ruta completa, pero usando las barras: '/', por ejemplo: C:/usuario/documentos/documentos
 var directory = 'carpeta2';
 var fileText = 'carpeta2/prueba2.txt';
-var text = 'War never changes';
 var key = 'carpeta2/clave.key';
+
+var text = 'En desarrollo de software e ingeniería de dominio, un lenguaje específico de dominio, o "lenguaje específico del dominio", 
+(en inglés domain-specific language, DSL) es un lenguaje de programación o especificación dedicado a resolver un problema en particular, 
+representar un problema específico y proveer una técnica para solucionar una situación particular. 
+El concepto no es nuevo pero se ha vuelto más popular debido al aumento del uso de modelos específicos del dominio.';
 
 # Creacion de directorio
 CreateDirectory(directory);
