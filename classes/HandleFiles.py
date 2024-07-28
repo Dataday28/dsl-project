@@ -26,9 +26,26 @@ class HandleFiles:
         try:
             with open(path, 'w') as archivo:
                 pass
-            print(f"\n Srchivo creado: {path} \n")
+            print(f"\n Archivo creado: {path} \n")
         except Exception as ex:
             print(f"\n Error al crear archivo: '{path}': {ex} \n")
+
+    def rename(self, old_path, new_path):
+        # Implementar la lógica para renombrar un archivo o directorio
+        try:
+            os.rename(old_path, new_path)
+            print(f"\n Renombrando archivo o directorio: {old_path} a {new_path} \n")
+        except Exception as ex:
+            print(f"\n Error al renombrar archivo o directorio: '{old_path}' a '{new_path}': {ex} \n")
+
+    def write(self, text, dst_path):
+        # Implementar la lógica para escribir un texto en un archivo
+        try:
+            with open(dst_path, 'w') as archivo:
+                archivo.write(text)
+            print(f"\n Escribiendo en archivo: {dst_path} \n")
+        except Exception as ex:
+            print(f"\n Error al escribir en archivo: '{dst_path}': {ex} \n")
 
     def move(self, src_path, dst_path):
         # Implementar la lógica para mover un archivo

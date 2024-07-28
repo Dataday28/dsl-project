@@ -7,6 +7,7 @@ from classes.HandleFiles import HandleFiles
 @v_args(inline=True)
 class DSL(Transformer):
 
+
     def __init__(self):
         self.variables = {}
 
@@ -62,6 +63,10 @@ class DSL(Transformer):
     def touch(self, files):
         # Implementar la lógica para crear un archivo vacío
         HandleFiles().touch(files)
+
+    def write(self, text, src_path):
+        # Implementar la lógica para escribir un texto en un archivo
+        HandleFiles().write(text, src_path)
 
     def move(self, files, src_path):
         # Implementar la lógica para mover un archivo

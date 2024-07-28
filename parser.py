@@ -10,7 +10,7 @@ with open('grammar/grammar.lark', 'r') as f:
 parser = Lark(grammar_file, parser='lalr', transformer=DSL())
 
 ## Leer el archivo
-with open('example.dsl', 'r') as file:
+with open('example2.dsl', 'r') as file:
     dsl_code = file.read()
 
 ## Analizar el código DSL
@@ -23,6 +23,8 @@ def evaluate(dsl_code):
         print(e)
     except ZeroDivisionError as e:
         print(e)
+    except Exception as e:
+        print(f"Error inesperado: {e}")
 
 # Ejecutar el código DSL y obtener el árbol AST
 evaluate(dsl_code)

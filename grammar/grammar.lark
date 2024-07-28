@@ -2,8 +2,9 @@ start: expr*
 
 expr: statement+ 
 
-statement: (var_assigment | var_declaration | outln | mkdir| rmdir | touch | move 
-            | copy | list | cat | genkey | cryptext | crypfile | destext | desfile | expt) ";"
+statement: (var_assigment | var_declaration | outln | mkdir| rmdir | touch | write 
+            | move | copy | list | cat | genkey | cryptext | crypfile | destext | desfile |  
+            | expt) ";"
 
 // Variables
 var_declaration: "var" var_name ("=" value)?
@@ -13,12 +14,14 @@ var_assigment:  var_name "=" value
 // Impresion en consola
 outln: "outln" "(" (value | expt )? ")"
 
-// Manejador de archivos o directorios
+// Manejador de archivos y directorios
 mkdir: "CreateDirectory" "(" (files | name) ")"
 
 rmdir: "DeleteDirectory" "(" (files | name) ")"
 
 touch: "CreateFile" "(" (files | name) ")"
+
+write: "WriteFile" "(" (text | name) "," (src_path | name) ")"
 
 move: "MoveFile" "(" (files | name) "," (src_path | name) ")"
 
@@ -61,7 +64,7 @@ src_path: "'" SRC ("/" SRC)* "'"
 value: NUMERIC | STRING  | BOOLEAN | FLOT | src_path | text | cryp
 var_name: CNAME
 ?factor: NUMBER -> number
-        | var_name
+        | name
         | "(" expt ")"
 
 SRC: /[a-zA-Z0-9_.:=-]+/
@@ -79,4 +82,4 @@ COMMENT: /#[^\n]*/
 %import common.NUMBER
 %import common.WS
 %ignore WS  
-%ignore COMMENT     
+%ignore COMMENT  
