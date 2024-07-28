@@ -6,6 +6,17 @@ El propósito de este DSL (Lenguaje Específico de Dominio) es proporcionar una 
 Está diseñado para facilitar tareas como la creación y eliminación de directorios y archivos, 
 la lectura y listado de contenido de archivos, operaciones basicas de matematicas como suma, resta, multiplicacion y division, y operaciones criptográficas como generación de claves y encriptación/desencriptación de texto y archivos.
 
+# Ejecucion
+Para poder ejecutar el codigo se nesesita python y hay un archivo 'requirements.txt' que contiene las bibliotecas necesarias para su ejecucion.
+
+Una vez teniendo lo necesario solo tienes que ejecutar el archivo 'parser.py' mas el documento donde este el codigo del DSL.
+
+Ejemplo:
+
+```python
+python parser.py example.dsl
+```
+
 # Estructura General
 El programa consiste en una serie de expresiones, cada una de las cuales puede contener una o más sentencias. Cada sentencia debe terminar con un punto y coma (;).
 

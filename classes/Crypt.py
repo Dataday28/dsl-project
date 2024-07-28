@@ -10,6 +10,7 @@ class Crypt:
             with open(f"{path}/clave.key", 'wb') as key_file:
                 key_file.write(key)
                 print(f"\n Clave generada en: {path} \n")
+                print(f"\n Advertencia: Guarda bien la Key, si la pierdes no podras recuperarla, ni decifrar lo que cifraste con ella \n")
 
         except Exception as ex:
             print(f"\n Error al generar la clave: {ex} \n No tiene permiso para crear el archivo\n")
